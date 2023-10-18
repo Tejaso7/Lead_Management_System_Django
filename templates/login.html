@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Sign Up</title>
+
+</head>
+<body style="background-color: hsl(0, 0%, 96%)">
+<section>
+    <!-- Jumbotron -->
+    <div class="px-5 py-5 text-center">
+        <div class="container" style="margin-left:30%">
+            <div class="row gx-lg-5  align-items-center">
+                <div class="col-lg-6 my-5 mb-5 mb-lg-0">
+                    <div class="card shadow">
+                        <div class="card-body py-5 my-2 px-md-5">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <h2 class="text-center mb-4">Login</h2>
+                                <div class="form-outline mb-4">
+                                    <input class="form-control" name="uname" placeholder="Username" required="required"
+                                           type="text">
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input class="form-control" name="pass" placeholder="Password" required="required"
+                                           type="password">
+                                </div>
+
+                                <button class="btn btn-primary btn-block mb-4" type="submit">Log in</button>
+                                <div class="clearfix">
+                                    <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+                                    <a href="#" class="  mx-5 pull-right" style="color:blue;">Forgot Your Password?</a>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <p class="text-center pt-4"><a href="{% url 'signup' %}" style="color: green;">Create an
+                                        Account</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+</section>
+</body>
+</html>
+{% endblock %}

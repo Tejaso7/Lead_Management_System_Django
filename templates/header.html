@@ -1,0 +1,52 @@
+{% include 'base.html' %}
+{% load static %}
+<header class="main-header mt-5 mb-5 ">
+    <div class="container">
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light" style="background-color:#f2f2f2">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link text-dark" href="#">Home</a>
+
+                        <a class="nav-link text-dark" href="#">Reports</a>
+                    </div>
+                </div>
+                {% if user.is_authenticated %}
+                <h5 class="text-dark my-1">{{ user.first_name }}</h5>
+                <div class="dropdown show">
+                    <a aria-expanded="false" aria-haspopup="true" data-toggle="dropdown"
+                        class="btn btn-outline-dark mx-2">
+                        <i class="fa fa-bars"></i></a>
+                    <div aria-labelledby="dropdownMenuLink" class="dropdown-menu dropdown-menu-left">
+                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">LogOut</a>
+                    </div>
+                </div>
+                {% else %}
+                <a class="btn btn-outline-dark me-5" href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+</header>
+
+<script>
+        $(document).ready(function(){
+            // Show hide popover
+            $(".dropdown").click(function(){
+                $(this).find(".dropdown-menu").slideToggle("fast");
+            });
+        });
+        $(document).on("click", function(event){
+            var $trigger = $(".dropdown");
+            if($trigger !== event.target && !$trigger.has(event.target).length){
+                $(".dropdown-menu").slideUp("fast");
+            }
+        });
+</script>
+<!-- Important for Table sort -->
+<!--<script src="{% static 'MDB5/js/compiled-addons.min.js' %}" type="text/javascript"></script>-->
+
+<!-- Important for Table Sort -->
+<!--<script src="{% static 'cloudflare/jquery.min.js' %}"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>

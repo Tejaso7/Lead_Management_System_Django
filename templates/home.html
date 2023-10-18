@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% include "header.html" %}
+
+    <br>
+    <div class="row">
+<!--        <div class="col-1"><a class="btn btn-outline-primary mx-2 my-4" href="{{request.META.HTTP_REFERER|escape}}">Back</a></div>-->
+        <div class="col-1"><a class="btn btn-light btn-outline-dark mx-2 my-4" href="{% url 'add_student'%}">Add</a></div>
+        <div class="col-9 mx-5 mt-4 mb-3 text-center"><h4>Student Details</h4></div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-12">
+            <div class="initCom" style="overflow:auto; width:100%; position:relative; padding:2px">
+                <div class="table-responsive text-nowrap p-2">
+                    <table cellspacing="1" class="table table-striped table-bordered table-sm me-3 " id="dtBasicExample"
+                           width="100%">
+                        <thead>
+                        <tr>
+
+                            <th class="th-sm fw-bold text-center">#</th>
+                            <th class="th-sm fw-bold text-center">Master Id</th>
+                            <th class="th-sm fw-bold">Name</th>
+                            <th class="th-sm fw-bold">Email</th>
+                            <th class="th-sm fw-bold text-center">Contact</th>
+                            <th class="th-sm fw-bold">College</th>
+                            <th class="th-sm fw-bold ">Degree</th>
+                            <th class="th-sm fw-bold text-center">Year Of Graduation</th>
+                            <th class="th-sm fw-bold text-center">Follow Up</th>
+                            <th class="th-sm fw-bold">Assignee</th>
+                            <th class="th-sm fw-bold">Action</th>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr hidden>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                            <td>2011/04/25</td>
+                            <td>$320,800</td>
+                            <td>$320,800</td>
+                            <td>$320,800</td>
+                        </tr>
+
+                        {% for student in students %}
+
+                        <tr>
+                            <td class="text-center">{{forloop.counter}}</td>
+                            <td class="text-center">{{student.id}}</td>
+                            <td>{{student.name}}</td>
+                            <td>{{student.email}}</td>
+                            <td class="text-center">{{student.contact}}</td>
+                            <td>{{student.college}}</td>
+                            <td>{{student.degree}}</td>
+                            <td class="text-center">{{student.grad_year}}</td>
+                            <td class="text-center"><button type="button" class="btn btn-primary btn-sm" data-target="#exampleModal-followup{{student.id}}" data-toggle="modal" id="myBtn">Follow Up</button>
+                                                            <!--- Add followup  Details-->
+                                    <div class="modal"
+                                        id="exampleModal-followup{{student.id}}" tabindex="-1"
+                                        role="dialog"
+                                        aria-labelledby="exampleModalLabel-2"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog"
+                                            role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="exampleModalLabel">
+                                                        Follow Up Details </h5>
+                                                    <button type="button"
+                                                        class="close"
+                                                        data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post"
+                                                        action="{% url 'save_followup' student.id %}"
+                                                        enctype="multipart/form-data"
+                                                        class="forms-sample">
+                                                        {% csrf_token %}
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>First Follow Up *</label>
+                                                                    <input
+                                                                        type="date"
+                                                                        class="form-control"
+                                                                        name="follow_up1"
+                                                                        value="{{student.follow_up1|date:'y-m-d'}}">
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="col-md-12">
+                                                                <div
+                                                                    class="form-group">
+                                                                    <label>Second Follow Up *</label>
+                                                                    <input
+                                                                        type="date"
+                                                                        class="form-control"
+                                                                        name="follow_up2"
+                                                                        value="{{student.follow_up2|date:'y-m-d'}}">
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="col-md-12">
+                                                                <div
+                                                                    class="form-group">
+                                                                        <label>Third Follow Up *</label>
+                                                                             <input
+                                                                                type="date"
+                                                                                class="form-control"
+                                                                                name="follow_up3"
+                                                                                value="{{student.follow_up3|date:'y-m-d'}}">
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="col-md-12">
+                                                                <div
+                                                                    class="form-group">
+                                                                    <label>Comments *</label>
+                                                                    <input
+                                                                        type="text"
+                                                                        class="form-control"
+                                                                        name="comment"
+                                                                        value="{{student.comments}}">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <hr>
+                                                        <div class="form-group"
+                                                            style="justify-content: center; text-align: center; ">
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-primary mr-2">Save</button>
+                                                            <button
+                                                                aria-label="Close"  class="btn btn-light mr-2"
+                                                                data-dismiss="modal" type="button">Cancel</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        <!--followup details ends-->
+                            </td>
+                            <td class="text-center"><button type="button" class="btn btn-dark btn-sm" data-target="#exampleModal-assignee{{student.id}}" data-toggle="modal" id="myBtn1">Assignee</button>
+                                 <!--- Add assignee  Details-->
+                                    <div class="modal"
+                                        id="exampleModal-assignee{{student.id}}" tabindex="-1"
+                                        role="dialog"
+                                        aria-labelledby="exampleModalLabel-2"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog"
+                                            role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="">
+                                                        Follow Up Details </h5>
+                                                    <button type="button"
+                                                        class="close"
+                                                        data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post"
+                                                        action="{% url 'save_assignee' student.id %}"
+                                                        enctype="multipart/form-data"
+                                                        class="forms-sample">
+                                                        {% csrf_token %}
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Assignee</label>
+                                                                    <select class="form-control bg-light" name="trainer" >
+                                                                        <option value=" None ">Select Option</option>
+                                                                        {% for trainers in trainers %}
+                                                                        <option value=" {{trainers.id }} ">{{trainers.first_name}}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                             </div>
+                                                        <hr>
+                                                        <div class="form-group"
+                                                            style="justify-content: center; text-align: center; ">
+                                                            <button
+                                                                type="submit"
+                                                                class="btn btn-primary mr-2">Save</button>
+                                                            <button
+                                                                aria-label="Close"  class="btn btn-light mr-2"
+                                                                data-dismiss="modal" type="button">Cancel</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        <!--assignee details ends-->
+
+                            </td>
+                            <td>
+                                <a class="me-2" href="{% url 'editStudent' student.id %}"><span class="btn btn-primary btn-sm"> Edit </span></a>
+                                <a class=" me-2" href="tel:{{ student.contact }}"><span class="btn btn-success btn-sm"> Call </span></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        {% if studs %}
+
+                            {% for studs in studs %}
+
+                            <tr>
+                                <td class="text-center">{{forloop.counter}}</td>
+                                <td class="text-center">{{studs.stud_id.id}}</td>
+                                <td>{{studs.stud_id.name}}</td>
+                                <td>{{studs.stud_id.email}}</td>
+                                <td class="text-center">{{studs.stud_id.contact}}</td>
+                                <td>{{studs.stud_id.college}}</td>
+                                <td>{{studs.stud_id.degree}}</td>
+                                <td class="text-center">{{studs.stud_id.grad_year}}</td>
+                                <td class="text-center"><button type="button" class="btn btn-primary btn-sm" data-target="#exampleModal-followup{{studs.stud_id.id}}" data-toggle="modal" id="myBtn2">Follow Up</button>
+                                                                <!--- Add followup  Details-->
+                                        <div class="modal"
+                                            id="exampleModal-followup{{studs.stud_id.id}}" tabindex="-1"
+                                            role="dialog"
+                                            aria-labelledby="exampleModalLabel-2"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog"
+                                                role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            Follow Up Details </h5>
+                                                        <button type="button"
+                                                            class="close"
+                                                            data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form method="post"
+                                                            action="{% url 'savefollowup' studs.stud_id.id %}"
+                                                            enctype="multipart/form-data"
+                                                            class="forms-sample">
+                                                            {% csrf_token %}
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>First Follow Up *</label>
+                                                                        <input
+                                                                            type="date"
+                                                                            class="form-control"
+                                                                            name="follow_up1"
+                                                                            value="{{studs.stud_id.follow_up1|date:'y-m-d'}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="col-md-12">
+                                                                    <div
+                                                                        class="form-group">
+                                                                        <label>Second Follow Up *</label>
+                                                                        <input
+                                                                            type="date"
+                                                                            class="form-control"
+                                                                            name="follow_up2"
+                                                                            value="{{studs.stud_id.follow_up2|date:'y-m-d'}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="col-md-12">
+                                                                    <div
+                                                                        class="form-group">
+                                                                            <label>Third Follow Up *</label>
+                                                                                 <input
+                                                                                    type="date"
+                                                                                    class="form-control"
+                                                                                    name="follow_up3"
+                                                                                    value="{{studs.stud_id.follow_up3|date:'y-m-d'}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    class="col-md-12">
+                                                                    <div
+                                                                        class="form-group">
+                                                                        <label>Comments *</label>
+                                                                        <input
+                                                                            type="text"
+                                                                            class="form-control"
+                                                                            name="comment"
+                                                                            value="{{studs.stud_id.comments}}">
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <hr>
+                                                            <div class="form-group"
+                                                                style="justify-content: center; text-align: center; ">
+                                                                <button
+                                                                    type="submit"
+                                                                    class="btn btn-primary mr-2">Save</button>
+                                                                <button
+                                                                    aria-label="Close"  class="btn btn-light mr-2"
+                                                                    data-dismiss="modal" type="button">Cancel</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            <!--followup details ends-->
+                                </td>
+                                <td>
+                                    {{ studs.trainer.first_name }}
+                                </td>
+                                <td>
+                                    <a class="me-2" href="{% url 'edit_student' studs.stud_id.id %}"><span class="btn btn-primary btn-sm"> Edit </span></a>
+                                    <a class=" me-2" href="tel:{{ studs.stud_id.contact }}"><span class="btn btn-success btn-sm"> Call </span></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        <tfoot>
+                        <tr>
+                            <th class="th-sm fw-bold text-center">#</th>
+                            <th class="th-sm fw-bold text-center">Master Id</th>
+                            <th class="th-sm fw-bold">Name</th>
+                            <th class="th-sm fw-bold">Email</th>
+                            <th class="th-sm fw-bold text-center">Contact</th>
+                            <th class="th-sm fw-bold">College</th>
+                            <th class="th-sm fw-bold">Degree</th>
+                            <th class="th-sm fw-bold text-center">Year Of Graduation</th>
+                            <th class="th-sm fw-bold text-center">Follow Up</th>
+                            <th class="th-sm fw-bold">Assignee</th>
+                            <th class="th-sm fw-bold">Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+{$(document).ready(function () {
+  $('#dtBasicExample').DataTable();
+  $('.dataTables_length').addClass('bs-select');
+});}
+
+</script>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% include "base.html" %}
+{% load static %}
+{% block content %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Sign Up</title>
+
+</head>
+<body style="background-color: hsl(0, 0%, 96%)">
+<section class="">
+    <!-- Jumbotron -->
+    <div class="px-4 py-5 px-md-5  text-center text-lg-start">
+        <div class="container" style="margin-left:30%">
+            <div class="row gx-lg-5  align-items-center">
+
+                 <div class="col-lg-6 my-5 mb-5 mb-lg-0">
+                    <div class="card shadow">
+                        <div class="card-body py-5 my-2 px-md-5">
+                        <form action="{% url 'signup' %}" method="POST">
+                            {% csrf_token %}
+                            <h2 class="text-center mb-4">Signup</h2>
+                                    <div class="form-outline mb-4">
+                                        <input type="text" class="form-control" placeholder="First Name" name="firstname">
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <input type="text" class="form-control" placeholder="Last Name" name="lastname">
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <input type="text" class="form-control" placeholder="Username" name="username">
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <input type="email" class="form-control" placeholder="Email" name="email">
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <input type="password" class="form-control" placeholder="Password" name="password">
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <h5>User Type </h5>
+                                        <input class="mx-2" type="radio" name="user_type"  value="Admin">Admin
+                                        <input class="mx-2" type="radio" name="user_type"  value="Trainer">Trainer
+                                    </div>
+                                    <div class="form-outline mb-4">
+                                        <button type="submit" class="btn btn-primary btn-block">Signup</button>
+                                    </div>
+                                    <p><a href="{% url 'login' %}" style="color: blue;">Already registered</a></p>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+</section>
+</body>
+</html>
+{% endblock %}
+
+
+
+
